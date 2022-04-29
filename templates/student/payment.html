@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <style>
+
+        form{
+           margin: 50px; 
+          
+        }
+
+    </style>
+  </head>
+  <body>
+    {% include "exam/navbar.html" %}
+ 
+
+<br><br>
+<br><br><br>
+<div class="container">
+  <h3 style="text-align: center;"></h3>
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
+    
+
+    <center> <button type="submit" class="btn btn-larger btn-success" onclick="payWithPayStack()" >Make Payment</button></center>
+  
+</div>
+
+<script>
+    function payWithPayStack(){
+        let currency = "NGN";
+        let plan = "";
+        let ref = "{{ payment.ref }}";
+        let obj = {
+            key: "pk_test_14162cb89ec6e813cf664044d2cf5a44f5b40255",
+            email: '{{ user.email }}',
+            amount: '{{ payment.amount_paid }}',
+            ref: ref,
+            callback: function(response){
+                window.location.href = "{% url 'verify-payment' payment.ref %}";
+            }
+        }
+        if (Boolean(currency)){
+            obj.currency = currency.toUpperCase()
+        }
+        if (Boolean(plan)){
+            obj.plan - plan;
+        }
+        var handler = PaystackPop.setup(obj);
+        handler.openIframe();
+    }
+</script>
+<br><br>
+{% include "exam/footer.html" %}
+  </body>
+</html>
