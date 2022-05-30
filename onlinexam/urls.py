@@ -1,7 +1,8 @@
-from django.urls import path,include
+from django.urls import path,include, reverse_lazy
 from django.contrib import admin
 from exam import views
 from django.contrib.auth.views import LogoutView,LoginView
+from django.contrib.auth import views as auth_views
 urlpatterns = [
    
     path('admin/', admin.site.urls),
@@ -48,5 +49,10 @@ urlpatterns = [
     path('view-question/<int:pk>', views.view_question_view,name='view-question'),
     path('delete-question/<int:pk>', views.delete_question_view,name='delete-question'),
 
+
+    path('forgetpassword', auth_views.PasswordResetView.as_view(template_name='pass/forgetpassword.html'), name='forgetpassword'),
+    path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='pass/password_reset_done.html'), name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='pass/password_reset_confirm.html',success_url=reverse_lazy('password_reset_complete')), name='password_reset_confirm'),
+    path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='pass/password_reset_complete.html'), name='password_reset_complete'),
 
 ]

@@ -7,6 +7,7 @@
   
 
   <style media="screen">
+   
     a:link {
       text-decoration: none;
     }
@@ -158,7 +159,7 @@
 
 </head>
 
-<body style="background-image: url({% static 'image/home.png' %}); background-repeat: no-repeat; background-attachment: fixed;background-position: center;">
+<body id="bo" style="background-image: url({% static 'image/home.png' %}); background-repeat: no-repeat; background-attachment: fixed;background-position: center;">
 
   <input type="checkbox" id="check">
   <!--header area start-->
@@ -207,6 +208,17 @@
     {% include "exam/footer.html" %}
   </div>
   <!--content end-->
+
+  <script>
+    window.addEventListener("resize", function() {
+    if (window.matchMedia("(min-width: 500px)").matches) {
+      console.log("Screen width is at least 500px")
+      document.getElementById("bo").style.display = "none";
+    } else {
+      console.log("Screen less than 500px")
+    }
+  })
+  </script>
 </body>
 
 </html>

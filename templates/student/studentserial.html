@@ -86,28 +86,25 @@
             <div class="card">
                 <form class="box" method="post">
                     {% csrf_token %}
-                    <h1>Candidate Login Panel</h1>
+                    <h1>Student Login Panel</h1>
 
                      <!-- {% render_field form.username class="form-control" autocomplete="off" placeholder="Username" %}
                      {% render_field form.password class="form-control" autocomplete="off" placeholder="Password" %} -->
                     
                     {% if messages %}
                         {% for message in messages %}
-                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                            ERROR
-                        {% else %}
+                        
                             <div style="color: white;">{{ message }}</div>
-                        {% endif %}
+                        
                         {% endfor %}
                     {% endif %}
 
-                     <input type="text" class="form-control" name="username" placeholder="Username" required>
+                     <input type="text" class="form-control" name="serial" placeholder="Serial Number" required>
                      <!-- <input type="text" class="form-control" name="serial" placeholder="Serial Number" required> -->
-                     <input type="password" class="form-control" name="password" placeholder="Password" required>
-                        
+                     
                      <input type="submit" name="" value="Login">
                         <br>
-                        <p><a href="{% url 'forgetpassword' %}">Forget Password?</a></p>
+                        
                 </form>
             </div>
         </div>

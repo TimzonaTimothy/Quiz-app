@@ -26,7 +26,7 @@
   </style>
 </head>
 
-<body style="background-image: url({% static 'image/home.png' %}); background-repeat: no-repeat; background-attachment: fixed;background-position: center; ">
+<body id="bo" style="background-image: url({% static 'image/home.png' %}); background-repeat: no-repeat; background-attachment: fixed;background-position: center; ">
 
 
 
@@ -44,8 +44,8 @@
 
         <div class="navbar-nav">
           <a style="padding-left: 30px;" href="/" class="nav-item nav-link"> Home</a>
+          <a href="/student/studentclick" class="nav-item nav-link">Candidate</a>
           <a href="/teacher/teacherclick" class="nav-item nav-link">Teacher</a>
-          <a href="/student/studentclick" class="nav-item nav-link">Student</a>
           <a href="/adminclick" class="nav-item nav-link">Admin</a>
           <a href="/contactus" class="nav-item nav-link">Contact</a>
           
@@ -58,7 +58,19 @@
     </nav>
   </div>
 
-
+  <script>
+    window.addEventListener("resize", function() {
+    if (window.matchMedia("(min-width: 300px)").matches) {
+      console.log("Screen width is at least 500px")
+      document.getElementById("bo").style.display = "block";
+      
+    } else {
+      console.log("Screen less than 500px")
+      document.getElementById("bo").style.display = "none";
+      alert('Sorry! This page require a Desktop view')
+    }
+  })
+  </script>
 </body>
 
 </html>

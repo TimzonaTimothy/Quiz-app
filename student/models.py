@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
 import secrets
 from .paystack import PayStack
 
@@ -20,10 +21,11 @@ class Student(models.Model):
 
 
 class Payment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    ref = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    serial = models.CharField(max_length=100, default=get_random_string(length=10))
     amount_paid = models.CharField(max_length=100)
     verified = models.BooleanField(default=False)
+    code = models.CharField(max_length=8, blank=True, unique=True, null=True,default=get_random_string(length=8))
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -32,27 +34,5 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.amount_paid
-
-    def save(self, *args, **kwargs) -> None:
-        while not self.ref:
-            ref = secrets.token_urlsafe(50)
-            object_with_similar_ref = Payment.objects.filter(ref=ref)
-            if not object_with_similar_ref:
-                self.ref = ref
-        super().save(*args, **kwargs)
-
-
-    def amount_value(self) -> int: 
-        return self.amount_paid * 100
-
-    def verify_payment(self):
-        paystack = PayStack()
-        status, result = paystack.verify_payment(self.ref, self.amount_paid)
-        if status:
-            if result['amount'] == self.amount_paid:
-                self.verified = True
-            self.save()
-        if self.verified:
-            return True
-        return False 
+ 
     

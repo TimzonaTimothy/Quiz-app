@@ -140,19 +140,21 @@ STATIC_DIR,
 
 LOGIN_REDIRECT_URL='/afterlogin'
 
-#for contact us give your gmail id and password
-EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'from@gmail.com' # this email will be used to send emails
-EMAIL_HOST_PASSWORD = 'ENTER_PASSWORD' # host email password required
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'arizonatymothy@gmail.com'
+EMAIL_HOST_PASSWORD = 'sohbennpawuturpa'
+
 # now sign in with your host gmail account in your browser
 # open following link and turn it ON
 # https://myaccount.google.com/lesssecureapps
 # otherwise you will get SMTPAuthenticationError at /contactus
 # this process is required because google blocks apps authentication by default
-EMAIL_RECEIVING_USER = ['to@gmail.com'] # email on which you will receive messages sent from website
+EMAIL_RECEIVING_USER = ['arizonatymothy@gmail.com'] # email on which you will receive messages sent from website
 
 PAYSTACK_PUBLIC_KEY = 'pk_test_14162cb89ec6e813cf664044d2cf5a44f5b40255'
 

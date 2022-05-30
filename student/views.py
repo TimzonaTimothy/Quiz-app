@@ -12,9 +12,56 @@ from teacher import models as TMODEL
 from .models import Payment
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
 from django.contrib import messages
+from django.contrib import auth
+from django.contrib.auth.models import User
+#serial
+def serial(request):
+    if request.method == 'POST':
+        serial_num = request.POST['serial']
+        user = request.user
+        stu = Payment.objects.get(user=user)
+        print(stu.serial)
+        if serial_num == stu.serial:
+            # return redirect('/afterlogin')
+            return HttpResponseRedirect('/student/student-exam')
+        else:
+            messages.error(request, 'Invalid credentials')
+            return redirect('/student/serial')
+    return render(request, 'student/studentserial.html', {})
 
+def studentlogin(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+    
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
+            # code = request.POST['serial']
 
+            
+                
+            user = auth.authenticate(username=username, password=password)
+            if user is not None:
+                
+                # if code != main.code:
+                    
+                #     messages.error(request, 'Invalid Serial Supplied')
+                #     return redirect('/student/studentlogin')
+                #     print(main.code)
+                # else:
+                auth.login(request,user)
+                messages.success(request, ', Welcome '+user.first_name)
+                # return redirect('/afterlogin')
+                return redirect('/student/serial')
+                # return HttpResponseRedirect('/student/student-exam')
+            else:
+                messages.error(request, 'Invalid credentials')
+                return redirect('/student/studentlogin')
+        return render(request, 'student/studentlogin.html', {})
 
 #for showing signup/login button for student
 def studentclick_view(request):
@@ -26,6 +73,7 @@ def studentclick_view(request):
 def student_signup_view(request: HttpRequest) -> HttpResponse:
     userForm=forms.StudentUserForm()
     studentForm=forms.StudentForm()
+    code = "2021/2022/"
     
     mydict={'userForm':userForm,'studentForm':studentForm}
     
@@ -43,9 +91,22 @@ def student_signup_view(request: HttpRequest) -> HttpResponse:
             my_student_group[0].user_set.add(user)
             amount_paid = request.POST['amount']
             payment = Payment.objects.create(amount_paid=amount_paid,user=user)
+            # code += payment.code
+            # payment.code = code 
             payment.save();
             
-        # return HttpResponseRedirect('studentlogin')
+
+            mail_subject = 'Thank you for registrating with us!'
+            message = render_to_string('student/order_received_email.html', {
+                'user' : user,
+                'payment':payment,
+            })
+            to_email = user.email
+            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            send_email.send()
+            
+            # return HttpResponseRedirect('studentlogin')
+            
             return render(request, 'student/payment.html',{'payment':payment, 'user':user})   
     else: 
         return render(request,'student/studentsignup.html',context=mydict)
