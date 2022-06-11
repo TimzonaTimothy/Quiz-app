@@ -91,8 +91,7 @@ def student_signup_view(request: HttpRequest) -> HttpResponse:
             my_student_group[0].user_set.add(user)
             amount_paid = request.POST['amount']
             payment = Payment.objects.create(amount_paid=amount_paid,user=user)
-            # code += payment.code
-            # payment.code = code 
+            payment.serial += '/2022'
             payment.save();
             
 

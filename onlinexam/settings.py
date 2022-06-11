@@ -25,9 +25,9 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'static')
 SECRET_KEY = '@k0#p3kidu)yaaa3u1hplxz)f@^6xiy384*(+n@@s5x#1bx@m5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','entraquiz.herokuapp.com','*']
 
 
 # Application definition
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
@@ -138,6 +139,7 @@ STATICFILES_DIRS=[
 STATIC_DIR,
  ]
 
+
 LOGIN_REDIRECT_URL='/afterlogin'
 
 
@@ -159,3 +161,8 @@ EMAIL_RECEIVING_USER = ['arizonatymothy@gmail.com'] # email on which you will re
 PAYSTACK_PUBLIC_KEY = 'pk_test_14162cb89ec6e813cf664044d2cf5a44f5b40255'
 
 PAYSTACK_SECRET_KEY = 'sk_test_00996e7a1407f509caf669fe490643527ab48770'
+
+if os.getcwd() == '/app':
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
+    SECURE_SSL_REDIRECT = True
+    DEBUG = False
