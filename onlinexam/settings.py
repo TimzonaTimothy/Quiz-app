@@ -10,11 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from email.policy import default
 import os
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATIC_DIR=os.path.join(BASE_DIR,'static')
 MEDIA_ROOT=os.path.join(BASE_DIR,'static')
 
@@ -22,10 +25,10 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'static')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@k0#p3kidu)yaaa3u1hplxz)f@^6xiy384*(+n@@s5x#1bx@m5'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['localhost','entraquiz.herokuapp.com','*']
 
@@ -145,11 +148,11 @@ LOGIN_REDIRECT_URL='/afterlogin'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'arizonatymothy@gmail.com'
-EMAIL_HOST_PASSWORD = 'sohbennpawuturpa'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 # now sign in with your host gmail account in your browser
 # open following link and turn it ON
@@ -158,9 +161,9 @@ EMAIL_HOST_PASSWORD = 'sohbennpawuturpa'
 # this process is required because google blocks apps authentication by default
 EMAIL_RECEIVING_USER = ['arizonatymothy@gmail.com'] # email on which you will receive messages sent from website
 
-PAYSTACK_PUBLIC_KEY = 'pk_test_14162cb89ec6e813cf664044d2cf5a44f5b40255'
+PAYSTACK_PUBLIC_KEY = config('PAYSTACK_PUBLIC_KEY')
 
-PAYSTACK_SECRET_KEY = 'sk_test_00996e7a1407f509caf669fe490643527ab48770'
+PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY')
 
 if os.getcwd() == '/app':
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
