@@ -28,13 +28,15 @@ MEDIA_URL = '/media/'
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
-
+# SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = "@k0#p3kidu)yaaa3u1hplxz)f@^6xiy384*(+n@@s5x#1bx@m5"
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', default=True, cast=bool)
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','entraquiz.herokuapp.com','*']
+ALLOWED_HOSTS = ['*','localhost','entraquiz.herokuapp.com']
+
+# WHITENOISE_AUTOREFRESH = True
 
 
 # Application definition
@@ -186,7 +188,3 @@ PAYSTACK_PUBLIC_KEY = config('PAYSTACK_PUBLIC_KEY')
 
 PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY')
 
-if os.getcwd() == '/app':
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
-    SECURE_SSL_REDIRECT = True
-    DEBUG = False

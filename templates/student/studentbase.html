@@ -156,7 +156,7 @@
 
 </head>
 
-<body style="background-image: url({% static 'image/home.jpg' %}); background-repeat: no-repeat;background-attachment: fixed;background-position: center; " >
+<body style="background-image: url({% static 'image/home.png' %}); background-repeat: no-repeat;background-attachment: fixed;background-position: center; " >
 
   <input type="checkbox" id="check">
   <!--header area start-->
@@ -181,6 +181,8 @@
       <h4>{{request.user.student.get_name}}</h4>
       <h6 style="color: rgb(255, 255, 255);">( Candidate )</h6>
       <br>
+      
+      
       <img src="{% static "image/student.png" %}" class="profile_image" alt="">
       
 

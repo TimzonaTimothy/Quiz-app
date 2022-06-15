@@ -4,4 +4,4 @@ staticfiles/
 *.pot
 *.pyc
 __pycache__/
-/.env
+.env
