@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 from email.policy import default
 import os
 from decouple import config
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     'teacher',
     'student',
     'widget_tweaks',
+    'cloudinary',
 
 ]
 
@@ -100,6 +104,11 @@ DATABASES = {
 }
 
 
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -141,6 +150,17 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[
 STATIC_DIR,
  ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'https-flenzy-herokuapp-com',
+    'API_KEY': '221637641144182',
+    'API_SECRET': 'NNS0aVlG_ipg7sMxBBC7KK9ZCGA'
+}
+
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
 LOGIN_REDIRECT_URL='/afterlogin'
