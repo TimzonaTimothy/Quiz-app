@@ -1,5 +1,7 @@
 from django.urls import path,include, reverse_lazy
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf import settings
 from exam import views
 from django.contrib.auth.views import LogoutView,LoginView
 from django.contrib.auth import views as auth_views
@@ -55,4 +57,6 @@ urlpatterns = [
     path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='pass/password_reset_confirm.html',success_url=reverse_lazy('password_reset_complete')), name='password_reset_confirm'),
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='pass/password_reset_complete.html'), name='password_reset_complete'),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

@@ -1,5 +1,7 @@
 from django.urls import path
 from student import views
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib.auth.views import LoginView
 
 urlpatterns = [
@@ -18,4 +20,5 @@ path('view-result', views.view_result_view,name='view-result'),
 path('check-marks/<int:pk>', views.check_marks_view,name='check-marks'),
 path('student-marks', views.student_marks_view,name='student-marks'),
 path('<str:ref>/', views.verify_payment,name='verify-payment'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

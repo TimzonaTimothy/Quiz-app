@@ -33,6 +33,6 @@ class Payment(models.Model):
 
 
     def __str__(self):
-        return self.amount_paid
+        return self.amount_paid + ' '+self.user.first_name
  
     

@@ -1,6 +1,7 @@
 from http.client import HTTPResponse
 from django.shortcuts import render,redirect,reverse, get_object_or_404
 from . import forms,models
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Sum
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
@@ -54,7 +55,7 @@ def studentlogin(request):
                 #     print(main.code)
                 # else:
                 auth.login(request,user)
-                messages.success(request, ', Welcome '+user.first_name)
+                messages.success(request, 'Welcome '+user.first_name)
                 # return redirect('/afterlogin')
                 return redirect('/student/serial')
                 # return HttpResponseRedirect('/student/student-exam')
@@ -152,14 +153,18 @@ def take_exam_view(request,pk):
     
     return render(request,'student/take_exam.html',{'course':course,'total_questions':total_questions,'total_marks':total_marks})
 
+
 @login_required(login_url='studentlogin')
 @user_passes_test(is_student)
 def start_exam_view(request,pk):
     course=QMODEL.Course.objects.get(id=pk)
     questions=QMODEL.Question.objects.all().filter(course=course)
+    questions = Paginator(questions, 1)
+    page = request.GET.get('page')
+    questions_listings = questions.get_page(page)
     if request.method=='POST':
         pass
-    response= render(request,'student/start_exam.html',{'course':course,'questions':questions})
+    response= render(request,'student/start_exam.html',{'course':course,'questions':questions_listings})
     response.set_cookie('course_id',course.id)
     return response
 

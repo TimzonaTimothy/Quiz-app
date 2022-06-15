@@ -20,7 +20,7 @@
     header {
       position: fixed;
       background: #22242A;
-      padding: 20px;
+      padding: 40px;
       width: 100%;
       z-index: 1;
     }
@@ -90,7 +90,7 @@
       padding-left: 40px;
       box-sizing: border-box;
       transition: 0.5s;
-
+      
     }
 
     .sidebar a:hover {
@@ -165,10 +165,10 @@
       <i style="left: 200px;margin-top: 17px;"class="fas fa-bars" id="sidebar_btn"></i>
     </label>
     <div class="left_area">
-      <h3>/</h3>
+      
     </div>
     <div class="right_area">
-      <a href="/logout" class="logout_btn" style="border-radius:0px;">Logout</a>
+      <a href="/logout" class="logout_btn" style="border-radius:0px;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
     </div>
   </header>
   <!--header area end-->
@@ -176,9 +176,12 @@
   <div class="sidebar">
     <center>
 
+      <br><br>
+      <img src="{{ MEDIA_ROOT }}{{request.user.student.profile_pic.url}}" class="profile_image" alt="">
+      <h4>{{request.user.student.get_name}}</h4>
+      <h6 style="color: rgb(255, 255, 255);">( Candidate )</h6>
+      <br>
       <img src="{% static "image/student.png" %}" class="profile_image" alt="">
-      <h4>{{request.user.first_name}}</h4>
-      <h6 style="color: rgb(255, 255, 255);">( Student )</h6>
       
 
     </center>
