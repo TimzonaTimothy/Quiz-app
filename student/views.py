@@ -159,12 +159,12 @@ def take_exam_view(request,pk):
 def start_exam_view(request,pk):
     course=QMODEL.Course.objects.get(id=pk)
     questions=QMODEL.Question.objects.all().filter(course=course)
-    questions = Paginator(questions, 1)
-    page = request.GET.get('page')
-    questions_listings = questions.get_page(page)
+    # questions = Paginator(questions, 1)
+    # page = request.GET.get('page')
+    # questions_listings = questions.get_page(page)
     if request.method=='POST':
         pass
-    response= render(request,'student/start_exam.html',{'course':course,'questions':questions_listings})
+    response= render(request,'student/start_exam.html',{'course':course,})
     response.set_cookie('course_id',course.id)
     return response
 
