@@ -209,7 +209,7 @@ def check_marks_view(request,pk):
     student = models.Student.objects.get(user_id=request.user.id)
     results= QMODEL.Result.objects.all().filter(exam=course).filter(student=student).last()
     m = ''
-    if results.marks >= 2:
+    if results.marks >= 60:
         m='Pass'
     else:
         m='Fail'
