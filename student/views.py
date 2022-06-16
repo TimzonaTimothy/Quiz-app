@@ -164,7 +164,7 @@ def start_exam_view(request,pk):
     # questions_listings = questions.get_page(page)
     if request.method=='POST':
         pass
-    response= render(request,'student/start_exam.html',{'course':course,})
+    response= render(request,'student/start_exam.html',{'course':course,'questions':questions})
     response.set_cookie('course_id',course.id)
     return response
 
