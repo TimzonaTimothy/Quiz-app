@@ -48,6 +48,11 @@
         
         
       </tr>
+      {% if m == "Fail"%}
+      <h4 style="color: red;text-align: center;">{{m}}</h4>
+      {% elif m == 'Pass'%}
+      <h4 style="color: green;text-align: center;">{{m}}</h4>
+      {% endif %}
       
       {% else %}
       <h2>You have not written this exam </h2>

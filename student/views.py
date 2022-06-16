@@ -208,7 +208,12 @@ def check_marks_view(request,pk):
     course=QMODEL.Course.objects.get(id=pk)
     student = models.Student.objects.get(user_id=request.user.id)
     results= QMODEL.Result.objects.all().filter(exam=course).filter(student=student).last()
-    return render(request,'student/check_marks.html',{'results':results})
+    m = ''
+    if results.marks >= 2:
+        m='Pass'
+    else:
+        m='Fail'
+    return render(request,'student/check_marks.html',{'results':results, 'm':m})
 
 @login_required(login_url='studentlogin')
 @user_passes_test(is_student)

@@ -32,7 +32,7 @@ MEDIA_URL = '/media/'
 SECRET_KEY = "@k0#p3kidu)yaaa3u1hplxz)f@^6xiy384*(+n@@s5x#1bx@m5"
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', default=True, cast=bool)
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*','localhost','entraquiz.herokuapp.com']
 
